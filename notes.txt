@@ -1,0 +1,37 @@
+TO CHECK
+- upload -> file corrupted
+- upload -> same file, change name
+- upload -> how do we get the right file, if we change name ?
+- network (non blocking ?)
+- cgi parallel ?
+
+
+Voici les différents types de syntaxe acceptés par nginx pour les directives location :
+
+1. Préfixe standard
+location /images/ { ... }
+Matche toutes les URLs qui commencent par /images/.
+
+2. Exact match
+location = /about.html { ... }
+Matche exactement /about.html (rien d’autre).
+
+3. Tilde (~) : expression régulière sensible à la casse
+location ~ \.php$ { ... }
+Matche toutes les URLs qui finissent par .php (sensible à la casse).
+
+4. Tilde étoile (~*) : expression régulière insensible à la casse
+location ~* \.jpg$ { ... }
+Matche toutes les URLs qui finissent par .jpg ou .JPG (insensible à la casse).
+
+5. Caret accent circonflexe (^~) : priorité au préfixe
+location ^~ /static/ { ... }
+Si l’URL commence par /static/, cette location est utilisée prioritairement (avant les regex).
+
+Résumé
+location /prefix/ { ... } : préfixe simple
+location = /exact { ... } : match exact
+location ~ regex { ... } : regex sensible à la casse
+location ~* regex { ... } : regex insensible à la casse
+location ^~ /prefix/ { ... } : préfixe prioritaire
+Nginx choisit la location la plus spécifique selon ces règles.

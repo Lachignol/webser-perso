@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Check if arg was passed
+if [ -z "$1" ]; then
+	echo "Usage: $0 ClassName"
+	exit 1
+fi
+
+CLASSNAME=$1
+CLASSNAME="${CLASSNAME^}"
+HEADER="${CLASSNAME}.hpp"
+SOURCE="${CLASSNAME}.cpp"
+# GUARD=$(echo "${CLASSNAME}_HPP" | tr '[:lower:]' '[:upper:]')
+
+# .hpp generation
+cat > $HEADER <<EOF
+#pragma once
+#include <iostream>
+#include <string>
+
+// Other includes
+
+
+/**
+ * @brief 
+ */
+class ${CLASSNAME} {
+	public:
+		${CLASSNAME}();
+		${CLASSNAME}(const ${CLASSNAME}& other);
+		${CLASSNAME}& operator=(const ${CLASSNAME}& other);
+		~${CLASSNAME}();
+
+		// Debug
+
+		std::string toString() const;
+
+		// ...
+};
+
+std::ostream& operator<<(std::ostream& os, const ${CLASSNAME}& obj);
+EOF
+
+# .cpp generation
+cat > $SOURCE <<EOF
+#include "${CLASSNAME}.hpp"
+#include <sstream>
+
+// Other includes
+
+
+${CLASSNAME}::${CLASSNAME}() {}
+
+${CLASSNAME}::${CLASSNAME}(const ${CLASSNAME}& other) {}
+
+${CLASSNAME}& ${CLASSNAME}::operator=(const ${CLASSNAME}& other) {
+	if (this != &other) {
+		
+	}
+	return *this;
+}
+
+${CLASSNAME}::~${CLASSNAME}() {}
+
+// Debug
+
+std::string ${CLASSNAME}::toString() const {
+	std::ostringstream oss;
+
+	oss << "${CLASSNAME} instance";
+	return oss.str();
+}
+
+std::ostream& operator<<(std::ostream& os, const ${CLASSNAME}& obj) {
+	os << obj.toString();
+	return os;
+}
+
+// ...
+EOF
+
+echo "${HEADER} & ${SOURCE} files generated."

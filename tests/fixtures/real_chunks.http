@@ -1,0 +1,10 @@
+POST /cgi-bin/chunked.py HTTP/1.1
+Host: localhost:8080
+Transfer-Encoding: chunked
+
+7
+Mozilla
+9
+Developer
+0
+

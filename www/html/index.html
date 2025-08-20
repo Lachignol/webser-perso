@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>42_webserv tester</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <h1>🚀 42_webserv tester</h1>
+    <div class="test-section">
+        <h2>✅ Static files</h2>
+        <p>If you see this page, the server serves HTML files!</p>
+        <img src="img/ufo-above-a-park.jpg" alt="ufo above a park" style="max-width: 200px; display: block;">
+        <p><small>Image to test static files</small></p>
+    </div>
+
+    <div class="test-section">
+        <h2>📤 File upload</h2>
+        <div class="upload-area">
+            <input type="file" id="fileInput" multiple>
+            <br><br>
+            <button onclick="uploadFile()">Upload</button>
+            <div id="uploadMsg"></div>
+        </div>
+        <h4>Upload directory:</h3>
+        <div id="uploadList"><em>&lt;empty&gt;</em></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 CGI test</h2>
+        <div class="button-group">
+            <a href="/cgi-bin/script.py">
+                <button onclick="updateSessionStats()">Test script Python</button>
+            </a>
+            <a href="/cgi-perl/script.pl">
+                <button onclick="updateSessionStats()">Test script Perl</button>
+            </a>
+            <a href="/cgi-ruby/script.rb">
+                <button onclick="updateSessionStats()">Test script Ruby</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Session informations</h2>
+        <p>📊 Http request numbers: <strong><span id="pageViewsCount">0</span></strong><br>
+        <small>Last: <em><span id="lastPageName">-</span></em><br>
+        At: <span id="lastPageView">never</span></small></p>
+
+        <p>📤 File uploads: <strong><span id="uploadCount">0</span></strong><br>
+        <small>Last: <em><span id="lastUploadFile">-</span></em><br> 
+        At: <span id="lastUpload">never</span></small></p>
+
+        <p>🗑️ File deletes: <strong><span id="deleteCount">0</span></strong><br>
+        <small>Last: <em><span id="lastDeleteFile">-</span></em><br> 
+        At: <span id="lastDelete">never</span></small></p>
+
+        <p>⚙️ CGI executions: <strong><span id="cgiCount">0</span></strong><br>
+        <small>Last: <em><span id="lastCgiScript">-</span></em><br> 
+        At: <span id="lastCgi">never</span></small></p>
+        <button onclick="updateSessionStats()">Refresh stats</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Redirection & Error pages</h2>
+        <div class="button-group">
+             <a href="/redirect/">
+            <button onclick="updateSessionStats()">Redirect me</button>
+            </a>
+            <a href="/notfound">
+                <button onclick="updateSessionStats()">Test 404</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
