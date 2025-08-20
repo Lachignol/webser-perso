@@ -206,16 +206,19 @@ bool Client::writeResponse() {
 	// write response on client socket
 	if (POLLOUT)
 	{
-		std::cout << "pret en ecriture" << std::endl;
+		//test
+		std::cout << "Ready to write" << std::endl;
 		ssize_t bytes_written = write(client_fd, 
 			response_buffer.c_str() + response_offset, to_write);
 		if (bytes_written < 0) {
-			std::cout << "probleme d'ecriture tesst" << std::endl;
+			//test
+			std::cout << "Error in writing" << std::endl;
 			return true;
 		}
 		response_offset += bytes_written;
 		if (response_offset == response_buffer.size()) {
-			std::cout << "tout la requete a ete ecrit" << std::endl;
+			//test
+			std::cout << "All request send" << std::endl;
 			response_sent = true;
 			response_offset = 0;
 		}
