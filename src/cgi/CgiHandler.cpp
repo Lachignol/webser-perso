@@ -116,7 +116,7 @@ void CgiHandler::setupEnvironment(const ServerConfig& serverConfig) {
 std::vector<char*> CgiHandler::buildArgs() const {
 	std::vector<char*> args;
 	std::string script_filename = fileUtils::extractFilename(script_path);
-	args.push_back(const_cast<char*>(("./" + script_filename).c_str()));
+	args.push_back(const_cast<char*>(fileUtils::extractFilename(script_path).c_str()));
 	args.push_back(const_cast<char*>(cgi_bin.c_str()));
 	args.push_back(NULL);
 	return args;
@@ -180,7 +180,10 @@ bool CgiHandler::execute(HttpResponse& httpResponse) {
 		if (chdir(script_dir.c_str()) != 0) {
 			_exit(1);
 		}
-		std::vector<char*> args = buildArgs();
+		std::vector<char*> args;
+		args.push_back(const_cast<char*>(fileUtils::extractFilename(script_path).c_str()));
+		args.push_back(const_cast<char*>(cgi_bin.c_str()));
+		args.push_back(NULL);
 		execve(args[0], args.data(), envp.data());
 		_exit(1);
 	} else {
