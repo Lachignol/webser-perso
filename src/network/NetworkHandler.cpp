@@ -111,12 +111,14 @@ const ServerConfig& NetworkHandler::findServerConfigForServerFd(int server_fd) {
 
 // Handle life cycle of a client (read, process, write)
 
-void NetworkHandler::readClientRequest(Client& client, int client_fd) {
+bool NetworkHandler::readClientRequest(Client& client, int client_fd) {
 	if (!client.readRequest()) {
 		poller.removeFd(client_fd);
-		connectionManager.removeClient(client_fd);
 		close(client_fd);
+		connectionManager.removeClient(client_fd);
+		return false;
 	}
+	return true;
 }
 
 void NetworkHandler::generateClientResponse(Client& client) {
@@ -137,7 +139,8 @@ void NetworkHandler::writeClientResponse(Client& client, pollfd& pollClient) {
 void NetworkHandler::processClientEvent(pollfd pollClient) {
 	Client& client = connectionManager.getClient(pollClient.fd);
 	if (!client.isRequestComplete()) {
-		readClientRequest(client, client.getClientFd());
+		if (!readClientRequest(client, client.getClientFd()))
+			return;
 	}
 	if (client.isRequestComplete() && client.getResponseBuffer().empty()) {
 		generateClientResponse(client);

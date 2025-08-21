@@ -29,7 +29,7 @@ class NetworkHandler {
 
 		// Handle life cycle of a client (read, process, write)
 
-		void readClientRequest(Client& client, int client_fd);
+		bool readClientRequest(Client& client, int client_fd);
 		void generateClientResponse(Client& client);
 		void writeClientResponse(Client& client,pollfd& pollClient);
 		void processClientEvent(pollfd pollClient);
