@@ -31,7 +31,7 @@ class NetworkHandler {
 
 		void readClientRequest(Client& client, int client_fd);
 		void generateClientResponse(Client& client);
-		void writeClientResponse(Client& client);
+		void writeClientResponse(Client& client,pollfd& pollClient);
 		void processClientEvent(pollfd pollClient);
 
 		// Cleanup

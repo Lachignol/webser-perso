@@ -125,8 +125,8 @@ void NetworkHandler::generateClientResponse(Client& client) {
 	client.setResponseBuffer(response);
 }
 
-void NetworkHandler::writeClientResponse(Client& client) {
-	if (client.writeResponse()) {
+void NetworkHandler::writeClientResponse(Client& client, pollfd& pollClient) {
+	if (client.writeResponse(pollClient)) {
 		client.setResponseSent(true);
 		poller.removeFd(client.getClientFd());
 		connectionManager.removeClient(client.getClientFd());
@@ -157,7 +157,7 @@ void NetworkHandler::processClientEvent(pollfd pollClient) {
 		client.setRequestComplete(false);
 	}
 	if (!client.isResponseSent() && !client.getResponseBuffer().empty()) {
-		writeClientResponse(client);
+		writeClientResponse(client, pollClient);
 	}
 }
 

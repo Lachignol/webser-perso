@@ -198,13 +198,13 @@ bool Client::readRequest() {
 	return true;
 }
 
-bool Client::writeResponse() {
+bool Client::writeResponse(pollfd& pollClient) {
 	if (response_sent || response_buffer.empty()) {
 		return true;
 	}
 	size_t to_write = response_buffer.size() - response_offset;
 	// write response on client socket
-	if (POLLOUT)
+	if (pollClient.revents & POLLOUT)
 	{
 		//test
 		std::cout << "Ready to write" << std::endl;

@@ -67,7 +67,7 @@ class Client {
 		// Core functionality
 
 		bool readRequest();
-		bool writeResponse();
+		bool writeResponse(pollfd &pollClient);
 
 };
 
