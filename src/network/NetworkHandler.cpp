@@ -126,11 +126,12 @@ void NetworkHandler::generateClientResponse(Client& client) {
 }
 
 void NetworkHandler::writeClientResponse(Client& client, pollfd& pollClient) {
+	int fd = client.getClientFd(); // Extraction de l'information essentielle avant suppression
 	if (client.writeResponse(pollClient)) {
 		client.setResponseSent(true);
-		poller.removeFd(client.getClientFd());
-		connectionManager.removeClient(client.getClientFd());
-		close(client.getClientFd());
+		poller.removeFd(fd);
+		close(fd);
+		connectionManager.removeClient(fd);
 	}
 }
 
