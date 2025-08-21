@@ -180,10 +180,13 @@ bool CgiHandler::execute(HttpResponse& httpResponse) {
 		if (chdir(script_dir.c_str()) != 0) {
 			_exit(1);
 		}
+		//build args in same scope because we lost in buildargs fonction the first value of array 
 		std::vector<char*> args;
-		args.push_back(const_cast<char*>(fileUtils::extractFilename(script_path).c_str()));
+		std::string script_filename = "./" + fileUtils::extractFilename(script_path);
+		args.push_back(const_cast<char*>(script_filename.c_str()));
 		args.push_back(const_cast<char*>(cgi_bin.c_str()));
 		args.push_back(NULL);
+		std::cout << args[0] << std::endl;
 		execve(args[0], args.data(), envp.data());
 		_exit(1);
 	} else {
